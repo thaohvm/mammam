@@ -1,16 +1,32 @@
 {% extends "mammam/layout.html" %}
+{% load static %}
 
 {% block body %}
-<div class="row justify-content-center padding">
-    <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
-        
-        <form action="/search" class="domain-form">
-            <div class="form-group d-md-flex"> 
-                <input type="text" class="form-control px-4" placeholder="Search by recipe, ingredient, dish ..."> 
-                <input type="submit" class="search-domain btn btn-primary px-5" value="Search"> 
-            </div>
-        </form>
-        
+
+<div class="container">
+    
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <img class="img-fluid my-3" src="{% static 'mammam/images/logo.png' %}" alt="logo">
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <form action="/search" class="domain-form">
+                <div class="form-group d-md-flex">
+                    <input type="text" class="form-control px-4" placeholder="Search by recipe, ingredient, dish ...">
+                    <input type="submit" class="search-domain btn btn-success px-5" value="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <button type="submit" class="btn btn-outline-success"> + Create Recipe</button>
+        </div>
     </div>
 </div>
+
 {% endblock %}
