@@ -1,5 +1,5 @@
 from django import forms
 
 
-class SearchForm(forms.Form):
+class RecipeForm(forms.ModelForm):
     pass
