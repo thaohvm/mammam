@@ -2,31 +2,33 @@
 {% load static %}
 
 {% block body %}
-
-<div class="container">
-    
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <img class="img-fluid my-3" src="{% static 'mammam/images/logo.png' %}" alt="logo">
+<div id="index_view">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <img class="img-fluid my-3" src="{% static 'mammam/images/logo.png' %}" alt="logo">
+            </div>
         </div>
-    </div>
-    
-    <div class="row justify-content-center">
-        <div class="col-10">
-            <form action="/search" class="domain-form">
-                <div class="form-group d-md-flex">
-                    <input type="text" class="form-control px-4" placeholder="Search by recipe, ingredient, dish ...">
-                    <input type="submit" class="search-domain btn btn-success px-5" value="Search">
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <div class="row justify-content-center">
-        <div class="col text-center">
-            <button type="submit" class="btn btn btn-success"> + Create Recipe</button>
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <form action="/search" class="domain-form">
+                    <div class="form-group d-md-flex">
+                        <input type="text" class="form-control px-4"
+                            placeholder="Search by recipe, ingredient, dish ...">
+                        <input type="submit" class="search-domain btn btn-success px-5" value="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col text-center">
+                <form action="{% url 'create' %}">
+                    <button type="submit" class="btn btn btn-success"> + Create Recipe</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}

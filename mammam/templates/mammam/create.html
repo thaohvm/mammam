@@ -1,8 +1,58 @@
-{% extends "network/layout.html" %}
+{% extends "mammam/layout.html" %}
 {% load static %}
 
 {% block body %}
+<div class="container-fluid">
+    <form action="/">
+        <hr>
+        <div class="form-check">
+            <input id="food-age-baby" class="form-check-input" type="radio" name="food-age">
+            <label class="form-check-label" for="food-age-baby">Baby Food</label>
+        </div>
+        <div class="form-check">
+            <input id="food-age-toddler" class="form-check-input" type="radio" name="food-age" checked>
+            <label class="form-check-label" for="food-age-toddler">Toddler Food</label>
+        </div>
+        <div class="form-check">
+            <input id="food-age-both" class="form-check-input" type="radio" name="food-age">
+            <label class="form-check-label" for="food-age-both">Both</label>
+        </div>
 
+        <hr>
+        <div>
+            <label for="img"><strong>Upload Recipe Image</strong></label>
+            <input type="file" id="img" name="img" accept="image/*">
+        </div>
+
+        <hr>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label-title"><strong>Title</strong></label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Asia Dumplings">
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label-description"><strong>Description</strong></label>
+            <input type="text" class="form-control" id="formGroupExampleInput2"
+                placeholder="Tell us about your recipe...">
+        </div>
+
+        <hr>
+        <div id="group-ingredients" class="mb-3">
+            <label for="ingredient-01" class="form-label-ingr"><strong>Ingredients</strong></label>
+            <input id="ingredient-01" type="text" class="form-control" placeholder="250gr flour">
+            <br>
+            <button id="button-ingredients" type="button" class="btn btn-secondary">Add more ingredient</button>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label-step"><strong>Steps</strong></label>
+            <input type="text" class="form-control" id="formGroupExampleInput2"
+                placeholder="Mix flour and water until they thicken">
+            <br>
+            <button type="button" class="btn btn-secondary">Add more step</button>
+        </div>
+
+        <button type="button" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 {% endblock %}
 
 {% block script %}

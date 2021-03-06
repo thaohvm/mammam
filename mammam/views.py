@@ -68,4 +68,7 @@ def register(request):
 
 
 def create(request):
-    pass
+    if request.user.is_authenticated:
+        return render(request, "mammam/create.html")
+    else:
+        return HttpResponseRedirect(reverse("login"))
