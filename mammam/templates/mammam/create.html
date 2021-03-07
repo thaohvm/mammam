@@ -37,17 +37,20 @@
 
         <hr>
         <div id="group-ingredients" class="mb-3">
-            <label for="ingredient-01" class="form-label-ingr"><strong>Ingredients</strong></label>
-            <input id="ingredient-01" type="text" class="form-control" placeholder="250gr flour">
+            <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>    
+            <table id="table-ingredients" class="col">
+                <tr><td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"></td></tr>
+            </table>
             <br>
             <button id="button-ingredients" type="button" class="btn btn-secondary">Add more ingredient</button>
         </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label-step"><strong>Steps</strong></label>
-            <input type="text" class="form-control" id="formGroupExampleInput2"
-                placeholder="Mix flour and water until they thicken">
+        <div id="group-steps" class="mb-3">
+            <label for="first-step" class="form-label-step"><strong>Steps</strong></label>
+            <table id="table-steps" class="col">
+                <tr><td><input id="first-step" type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td></tr>
+            </table>
             <br>
-            <button type="button" class="btn btn-secondary">Add more step</button>
+            <button id="button-steps" type="button" class="btn btn-secondary">Add more step</button>
         </div>
 
         <button type="button" class="btn btn-primary">Submit</button>
