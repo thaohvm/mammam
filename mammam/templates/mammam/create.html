@@ -39,7 +39,10 @@
         <div id="group-ingredients" class="mb-3">
             <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>    
             <table id="table-ingredients" class="col">
-                <tr><td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"></td></tr>
+                <tr>
+                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button></td>
+                </tr>
             </table>
             <br>
             <button id="button-ingredients" type="button" class="btn btn-secondary">Add more ingredient</button>
@@ -47,7 +50,10 @@
         <div id="group-steps" class="mb-3">
             <label for="first-step" class="form-label-step"><strong>Steps</strong></label>
             <table id="table-steps" class="col">
-                <tr><td><input id="first-step" type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td></tr>
+                <tr>
+                    <td><input id="first-step" type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button></td>
+                </tr>
             </table>
             <br>
             <button id="button-steps" type="button" class="btn btn-secondary">Add more step</button>
