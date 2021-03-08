@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("button-ingredients").onclick = add_ingredient;
     document.getElementById("button-steps").onclick = add_step;
+    document.getElementById("button-submit").onclick = handle_submit;
 });
 
 function add_ingredient() {
@@ -12,7 +13,7 @@ function add_ingredient() {
 function add_step() {
     let tableSteps = document.getElementById("table-steps");
     let newStep = tableSteps.insertRow(-1);
-    newStep.innerHTML = '<tr><td><input id="first-step" type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td><td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button></td></tr>';
+    newStep.innerHTML = '<tr><td><input type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td><td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button></td></tr>';
 }
 
 function remove_row(button) {
@@ -20,4 +21,22 @@ function remove_row(button) {
     if (button.closest("table").prop("rows").length > 1) {
         button.closest("tr").remove();
     }
+}
+
+function handle_submit() {
+    let formData = new FormData(document.getElementById("create-form"));
+    let data = Object.fromEntries(formData.entries());
+    let ingredients = $("table#table-ingredients tr").map(function () {
+        return $(this).find("td input").map(function () {
+            return $(this).val();
+        }).get();
+    }).get();
+    let steps = $("table#table-steps tr").map(function () {
+        return $(this).find("td input").map(function () {
+            return $(this).val();
+        }).get();
+    }).get();
+    console.log(data);
+    console.log(ingredients);
+    console.log(steps);
 }

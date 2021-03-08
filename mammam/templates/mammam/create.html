@@ -3,7 +3,7 @@
 
 {% block body %}
 <div class="container-fluid">
-    <form action="/">
+    <form id="create-form" action="/">
         <hr>
         <div class="form-check">
             <input id="food-age-baby" class="form-check-input" type="radio" name="food-age">
@@ -26,13 +26,12 @@
 
         <hr>
         <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label-title"><strong>Title</strong></label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Asia Dumplings">
+            <label for="title" class="form-label-title"><strong>Title</strong></label>
+            <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asia Dumplings">
         </div>
         <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label-description"><strong>Description</strong></label>
-            <input type="text" class="form-control" id="formGroupExampleInput2"
-                placeholder="Tell us about your recipe...">
+            <label for="description" class="form-label-description"><strong>Description</strong></label>
+            <input id="recipe-description" name="recipe-description" type="text" class="form-control" placeholder="Tell us about your recipe...">
         </div>
 
         <hr>
@@ -59,7 +58,7 @@
             <button id="button-steps" type="button" class="btn btn-secondary">Add more step</button>
         </div>
 
-        <button type="button" class="btn btn-primary">Submit</button>
+        <button id="button-submit" type="button" class="btn btn-primary">Submit</button>
     </form>
 </div>
 {% endblock %}
