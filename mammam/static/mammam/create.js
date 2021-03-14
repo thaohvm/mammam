@@ -26,17 +26,19 @@ function remove_row(button) {
 function handle_submit() {
     let formData = new FormData(document.getElementById("create-form"));
     let data = Object.fromEntries(formData.entries());
-    let ingredients = $("table#table-ingredients tr").map(function () {
+    data["ingredients"] = $("table#table-ingredients tr").map(function () {
         return $(this).find("td input").map(function () {
             return $(this).val();
         }).get();
     }).get();
-    let steps = $("table#table-steps tr").map(function () {
+    data["steps"] = $("table#table-steps tr").map(function () {
         return $(this).find("td input").map(function () {
             return $(this).val();
         }).get();
     }).get();
-    console.log(data);
-    console.log(ingredients);
-    console.log(steps);
+    fetch("/recipe/create", {
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+        .catch((error) => console.log(error));
 }

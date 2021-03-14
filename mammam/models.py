@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from star_ratings.models import Rating
 
 class User(AbstractUser):
     pass

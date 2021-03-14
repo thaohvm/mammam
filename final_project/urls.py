@@ -16,9 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-app_name="ratings"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("mammam.urls")),
-    path('ratings/', include("star_ratings.urls", namespace="ratings")),
 ]
