@@ -1,20 +1,18 @@
 import json
 
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 from django.http import (
-    HttpResponse,
     HttpResponseRedirect,
-    HttpResponseBadRequest,
     JsonResponse,
 )
-from django.urls import reverse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User
+from .models import User, Recipe
+
 
 # Create your views here.
 
@@ -83,5 +81,19 @@ def create(request):
         return render(request, "mammam/create.html")
     elif request.method == "POST":
         data = json.loads(request.body)
-        print(data)
+        print('bbb')
+        if request.FILES:
+            print('aaa')
+
+        ingredients = ', '.join(data['ingredients'])
+        steps = ', '.join(data['steps'])
+
+        recipe = Recipe(title=data['title'],
+                        food_age=data['food-age'],
+                        description='recipe-description',
+                        user_id=request.user.id,
+                        steps=steps,
+                        ingredients=ingredients)
+        recipe.save()
+
         return JsonResponse({"status": "OK"}, status=200)
