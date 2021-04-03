@@ -10,7 +10,8 @@
             <label class="form-check-label" for="food-age-baby">Baby Food</label>
         </div>
         <div class="form-check">
-            <input id="food-age-toddler" class="form-check-input" type="radio" name="food-age" value="Toddler Food" checked>
+            <input id="food-age-toddler" class="form-check-input" type="radio" name="food-age" value="Toddler Food"
+                checked>
             <label class="form-check-label" for="food-age-toddler">Toddler Food</label>
         </div>
         <div class="form-check">
@@ -31,16 +32,18 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label-description"><strong>Description</strong></label>
-            <input id="recipe-description" name="recipe-description" type="text" class="form-control" placeholder="Tell us about your recipe...">
+            <input id="recipe-description" name="recipe-description" type="text" class="form-control"
+                placeholder="Tell us about your recipe...">
         </div>
 
         <hr>
         <div id="group-ingredients" class="mb-3">
-            <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>    
+            <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>
             <table id="table-ingredients" class="col">
                 <tr>
                     <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"></td>
-                    <td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button>
+                    </td>
                 </tr>
             </table>
             <br>
@@ -50,8 +53,10 @@
             <label for="first-step" class="form-label-step"><strong>Steps</strong></label>
             <table id="table-steps" class="col">
                 <tr>
-                    <td><input id="first-step" type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td>
-                    <td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button></td>
+                    <td><input id="first-step" type="text" class="form-control"
+                            placeholder="Mix flour and water until they thicken"></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="remove_row($(this))">Remove</button>
+                    </td>
                 </tr>
             </table>
             <br>
@@ -64,5 +69,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'mammam/create.js' %}"></script>
+<script src="{% static 'create.js' %}"></script>
 {% endblock %}

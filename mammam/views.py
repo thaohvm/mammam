@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import (
     HttpResponse,
     HttpResponseRedirect,
-    HttpResponseBadRequest,
     JsonResponse,
 )
 from django.urls import reverse
@@ -20,7 +19,7 @@ from .models import User
 
 
 def index(request):
-    return render(request, "mammam/index.html")
+    return render(request, "index.html")
 
 
 def login_view(request):
@@ -37,11 +36,11 @@ def login_view(request):
         else:
             return render(
                 request,
-                "mammam/login.html",
+                "login.html",
                 {"message": "Invalid username and/or password."},
             )
     else:
-        return render(request, "mammam/login.html")
+        return render(request, "login.html")
 
 
 def logout_view(request):
@@ -59,7 +58,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(
-                request, "mammam/register.html", {"message": "Passwords must match."}
+                request, "register.html", {"message": "Passwords must match."}
             )
 
         # Attempt to create new user
@@ -68,19 +67,19 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(
-                request, "mammam/register.html", {"message": "Username already taken."}
+                request, "register.html", {"message": "Username already taken."}
             )
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "mammam/register.html")
+        return render(request, "register.html")
 
 
 @csrf_exempt
 @login_required(login_url="/login")
 def create(request):
     if request.method == "GET":
-        return render(request, "mammam/create.html")
+        return render(request, "create.html")
     elif request.method == "POST":
         data = json.loads(request.body)
         print(data)
