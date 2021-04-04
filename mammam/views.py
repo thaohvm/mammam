@@ -30,7 +30,6 @@ def index(request):
             q = Q()
             q |= Q(title__contains=w)
             q |= Q(description__contains=w)
-            q |= Q(description__contains=w)
             q |= Q(age__contains=w)
             q |= Q(ingredients__contains=w)
             q |= Q(steps__contains=w)
