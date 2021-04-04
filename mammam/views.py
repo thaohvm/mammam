@@ -90,9 +90,12 @@ def create(request):
             age=data.get("food-age", ""),
             ingredients=json.dumps(data.get("ingredients")),
             steps=json.dumps(data.get("steps")),
-            image=image if image else None,
+            image=image if "image" in files else None,
             created_by=request.user,
         )
         recipe.save()
 
-        return JsonResponse({"status": "OK"}, status=200)
+        return JsonResponse(
+            {"status": "OK", "recipe_id": recipe.id},
+            status=200,
+        )
