@@ -7,15 +7,15 @@ class User(AbstractUser):
 
 
 class Recipe(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500, blank=True)
+    age = models.TextField(max_length=100, blank=True)
     ingredients = models.TextField(max_length=500, blank=True)
     steps = models.TextField(max_length=4000, blank=True)
-    extra = models.TextField(max_length=4000, blank=True)
     image = models.ForeignKey(
         "Image", on_delete=models.SET_NULL, null=True, related_name="image"
     )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
