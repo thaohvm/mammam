@@ -7,7 +7,8 @@
         <hr>
         <div class="mb-3">
             <label for="recipe-title" class="form-label-title"><strong>Title</strong></label>
-            <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asia Dumplings" required>
+            <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asia Dumplings"
+                required>
         </div>
         <div class="mb-3">
             <label for="recipe-description" class="form-label-description"><strong>Description</strong></label>
@@ -19,34 +20,37 @@
             <div class="input-group mb-3">
                 <div class="custom-file">
                     <input id="recipe-image" name="image" type="file" accept="image/*" class="custom-file-input">
-                    <label id="recipe-image-label" class="custom-file-label" for="recipe-image">Upload a photo to show off your recipe</label>
+                    <label id="recipe-image-label" class="custom-file-label" for="recipe-image">Upload a photo to show
+                        off your recipe</label>
                 </div>
             </div>
         </div>
 
         <hr>
         <div id="group-age">
-            <label class="form-label-title mr-3" for="food-age-baby"><strong>Age</strong></label>
+            <label class="form-label-title mr-3" for="food-age-baby"><strong>Recipe For</strong></label>
             <div class="custom-control custom-radio custom-control-inline">
-                <input id="food-age-baby" class="custom-control-input" type="radio" name="food-age" value="Baby Food">
-                <label class="custom-control-label" for="food-age-baby">Baby Food</label>
+                <input id="food-age-baby" class="custom-control-input" type="radio" name="food-age" value="Babies">
+                <label class="custom-control-label" for="food-age-baby">Baby</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input id="food-age-toddler" class="custom-control-input" type="radio" name="food-age" value="Toddler Food"
+                <input id="food-age-toddler" class="custom-control-input" type="radio" name="food-age" value="Toddlers"
                     checked>
-                <label class="custom-control-label" for="food-age-toddler">Toddler Food</label>
+                <label class="custom-control-label" for="food-age-toddler">Toddler</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input id="food-age-both" class="custom-control-input" type="radio" name="food-age" value="Both">
-                <label class="custom-control-label" for="food-age-both">Both</label>
+                <input id="food-age-both" class="custom-control-input" type="radio" name="food-age"
+                    value="Babies & Toddlers">
+                <label class="custom-control-label" for="food-age-both">Baby And Toddler</label>
             </div>
         </div>
-          
+
         <div id="group-ingredients" class="mb-3">
             <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>
             <table id="table-ingredients" class="col">
                 <tr>
-                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour" required></td>
+                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"
+                            required></td>
                     <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
                     </td>
                 </tr>

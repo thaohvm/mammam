@@ -77,7 +77,20 @@ function submit() {
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log("Create success: ", result);
+      if (result["status"] != "OK") {
+        swal({
+          text: "Failed to create recipe. Please try again!",
+          icon: "error",
+        });
+      } else {
+        window.location.replace(result["url"]);
+      }
     })
-    .catch((error) => console.log("Create failed: ", error));
+    .catch((error) => {
+      console.log("Create failed: ", error);
+      swal({
+        text: "Failed to create recipe. Please try again!",
+        icon: "error",
+      });
+    });
 }

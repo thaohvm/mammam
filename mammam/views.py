@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import (
+    HttpResponseNotFound,
     HttpResponseRedirect,
     JsonResponse,
 )
@@ -63,12 +64,30 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(
-                request, "register.html", {"message": "Username already taken."}
+                request,
+                "register.html",
+                {"message": "Username already taken."},
             )
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "register.html")
+
+
+def view(request, id):
+    try:
+        recipe = Recipe.objects.get(id=id)
+    except Recipe.DoesNotExist:
+        return HttpResponseNotFound("Recipe not found!")
+
+    ingredients = json.loads(recipe.ingredients)
+    steps = json.loads(recipe.steps)
+
+    return render(
+        request,
+        "view.html",
+        {"recipe": recipe, "ingredients": ingredients, "steps": steps},
+    )
 
 
 @csrf_exempt
@@ -77,25 +96,32 @@ def create(request):
     if request.method == "GET":
         return render(request, "create.html")
     elif request.method == "POST":
-        data = json.loads(request.POST.get("data"))
-        files = request.FILES
+        try:
+            data = json.loads(request.POST.get("data"))
+            files = request.FILES
 
-        if "image" in files:
-            image = Image(file=files["image"])
-            image.save()
+            if "image" in files:
+                image = Image(file=files["image"])
+                image.save()
 
-        recipe = Recipe(
-            title=data.get("title"),
-            description=data.get("description", ""),
-            age=data.get("food-age", ""),
-            ingredients=json.dumps(data.get("ingredients")),
-            steps=json.dumps(data.get("steps")),
-            image=image if "image" in files else None,
-            created_by=request.user,
-        )
-        recipe.save()
+            recipe = Recipe(
+                title=data.get("title"),
+                description=data.get("description", ""),
+                age=data.get("food-age", ""),
+                ingredients=json.dumps(data.get("ingredients")),
+                steps=json.dumps(data.get("steps")),
+                image=image if "image" in files else None,
+                created_by=request.user,
+            )
+            recipe.save()
 
-        return JsonResponse(
-            {"status": "OK", "recipe_id": recipe.id},
-            status=200,
-        )
+            url = reverse("view", kwargs={"id": recipe.id})
+            return JsonResponse(
+                {"status": "OK", "url": url},
+                status=200,
+            )
+        except Exception as e:
+            return JsonResponse(
+                {"status": "ERROR", "message": str(e)},
+                status=500,
+            )

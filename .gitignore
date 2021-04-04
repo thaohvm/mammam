@@ -1,7 +1,7 @@
 ## Customizations
 # Only keep media placeholder
 media/images/*
-!media/images/.gitkeep 
+!media/images/.gitkeep
 
 .vscode/*
 !.vscode/settings.json
