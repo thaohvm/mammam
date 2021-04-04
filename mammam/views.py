@@ -74,20 +74,41 @@ def register(request):
         return render(request, "register.html")
 
 
-def view(request, id):
+@csrf_exempt
+@login_required(login_url="/login")
+def recipe(request, id):
     try:
         recipe = Recipe.objects.get(id=id)
     except Recipe.DoesNotExist:
         return HttpResponseNotFound("Recipe not found!")
 
-    ingredients = json.loads(recipe.ingredients)
-    steps = json.loads(recipe.steps)
+    if request.method == "GET":
+        ingredients = json.loads(recipe.ingredients)
+        steps = json.loads(recipe.steps)
 
-    return render(
-        request,
-        "view.html",
-        {"recipe": recipe, "ingredients": ingredients, "steps": steps},
-    )
+        return render(
+            request,
+            "view.html",
+            {"recipe": recipe, "ingredients": ingredients, "steps": steps},
+        )
+    elif request.method == "DELETE":
+        if recipe.created_by != request.user:
+            return JsonResponse(
+                {
+                    "status": "ERROR",
+                    "message": "You're not the recipe's creator.",
+                },
+                status=403,
+            )
+        if recipe.image:
+            recipe.image.delete()
+        recipe.delete()
+        return JsonResponse({"status": "OK"}, status=200)
+    else:
+        return JsonResponse(
+            {"status": "ERROR", "message": "Invalid method."},
+            status=400,
+        )
 
 
 @csrf_exempt
