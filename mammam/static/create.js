@@ -33,6 +33,7 @@ function removeRow(button) {
 }
 
 function submit() {
+  // Validate form data first and stop if there're invalid data
   if (!$("#create-form")[0].checkValidity()) {
     $("#create-form").addClass("was-validated");
     return;
@@ -64,9 +65,19 @@ function submit() {
     })
     .get();
 
-  console.log(JSON.stringify(data));
-  //   fetch("/recipe/create", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //   }).catch((error) => console.log(error));
+  // Generate new FormData for POST request with image file
+  let images = $("#recipe-image").prop("files");
+  let postData = new FormData();
+  postData.append("data", JSON.stringify(data));
+  postData.append("image", images[0]);
+
+  fetch("/recipe/create", {
+    method: "POST",
+    body: postData,
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Create success: ", result);
+    })
+    .catch((error) => console.log("Create failed: ", error));
 }

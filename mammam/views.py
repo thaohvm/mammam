@@ -77,6 +77,10 @@ def create(request):
     if request.method == "GET":
         return render(request, "create.html")
     elif request.method == "POST":
-        data = json.loads(request.body)
-        print(data)
+        data = json.loads(request.POST.get("data"))
+        files = request.FILES
+
+        print(f"Request data: {data}")
+        print(f"Request photo: {files}")
+
         return JsonResponse({"status": "OK"}, status=200)
