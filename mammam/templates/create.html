@@ -3,16 +3,16 @@
 
 {% block body %}
 <div class="container-fluid">
-    <form id="create-form" action="/">
+    <form id="create-form" action="/" class="needs-validation" novalidate>
         <hr>
         <div class="mb-3">
             <label for="recipe-title" class="form-label-title"><strong>Title</strong></label>
-            <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asia Dumplings">
+            <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asia Dumplings" required>
         </div>
         <div class="mb-3">
             <label for="recipe-description" class="form-label-description"><strong>Description</strong></label>
             <input id="recipe-description" name="description" type="text" class="form-control"
-                placeholder="Tell us about your recipe...">
+                placeholder="Tell us about your recipe..." required>
         </div>
         <div>
             <label for="recipe-image" class="form-label-image mr-3"><strong>Image</strong></label>
@@ -46,7 +46,7 @@
             <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>
             <table id="table-ingredients" class="col">
                 <tr>
-                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"></td>
+                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour" required></td>
                     <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
                     </td>
                 </tr>
@@ -59,7 +59,7 @@
             <table id="table-steps" class="col">
                 <tr>
                     <td><input id="first-step" type="text" class="form-control"
-                            placeholder="Mix flour and water until they thicken"></td>
+                            placeholder="Mix flour and water until they thicken" required></td>
                     <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
                     </td>
                 </tr>

@@ -11,16 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add row when clicked on ingredient or step
   $("#button-ingredients").click(function () {
-    let tableIngredients = document.getElementById("table-ingredients");
-    let newIngredient = tableIngredients.insertRow(-1);
+    let newIngredient = $("#table-ingredients")[0].insertRow(-1);
     newIngredient.innerHTML =
-      '<tr><td><input type="text" class="form-control" placeholder="250gr flour"></td><td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button></td></tr>';
+      '<tr><td><input type="text" class="form-control" placeholder="250gr flour" required></td><td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button></td></tr>';
   });
   $("#button-steps").click(function () {
-    let tableSteps = document.getElementById("table-steps");
-    let newStep = tableSteps.insertRow(-1);
+    let newStep = $("#table-steps")[0].insertRow(-1);
     newStep.innerHTML =
-      '<tr><td><input type="text" class="form-control" placeholder="Mix flour and water until they thicken"></td><td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button></td></tr>';
+      '<tr><td><input type="text" class="form-control" placeholder="Mix flour and water until they thicken" required></td><td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button></td></tr>';
   });
 
   // Finally, submit handler
@@ -35,8 +33,16 @@ function removeRow(button) {
 }
 
 function submit() {
-  let formData = new FormData(document.getElementById("create-form"));
+  if (!$("#create-form")[0].checkValidity()) {
+    $("#create-form").addClass("was-validated");
+    return;
+  }
+
+  let formData = new FormData($("#create-form")[0]);
   let data = Object.fromEntries(formData.entries());
+  delete data["image"]; // Image is handled separately from JSON data
+
+  // Parse ingredients and steps into arrays
   data["ingredients"] = $("table#table-ingredients tr")
     .map(function () {
       return $(this)
@@ -57,8 +63,10 @@ function submit() {
         .get();
     })
     .get();
-  fetch("/recipe/create", {
-    method: "POST",
-    body: JSON.stringify(data),
-  }).catch((error) => console.log(error));
+
+  console.log(JSON.stringify(data));
+  //   fetch("/recipe/create", {
+  //     method: "POST",
+  //     body: JSON.stringify(data),
+  //   }).catch((error) => console.log(error));
 }
