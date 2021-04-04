@@ -8,39 +8,45 @@
         <div class="mb-3">
             <label for="recipe-title" class="form-label-title"><strong>Title</strong></label>
             <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asian Dumplings"
-                required>
+                value="{{ recipe.title }}" data-id="{{ recipe.id }}" required>
         </div>
         <div class="mb-3">
             <label for="recipe-description" class="form-label-description"><strong>Description</strong></label>
             <input id="recipe-description" name="description" type="text" class="form-control"
-                placeholder="Tell us about your recipe..." required>
+                placeholder="Tell us about your recipe..." value="{{ recipe.description }}" required>
         </div>
         <div>
             <label for="recipe-image" class="form-label-image mr-3"><strong>Image</strong></label>
             <div class="input-group mb-3">
                 <div class="custom-file">
                     <input id="recipe-image" name="image" type="file" accept="image/*" class="custom-file-input">
-                    <label id="recipe-image-label" class="custom-file-label" for="recipe-image">Upload a photo to show
-                        off your recipe</label>
+                    <label id="recipe-image-label" class="custom-file-label" for="recipe-image">Upload a new photo for
+                        your recipe if needed</label>
                 </div>
             </div>
+            {% if recipe.image %}
+            <div class="col-4">
+                <img src="{{ recipe.image.file.url }}" class="img-thumbnail" alt="Recipe photo">
+            </div>
+            {% endif %}
         </div>
 
         <hr>
         <div id="group-age">
             <label class="form-label-title mr-3" for="food-age-baby"><strong>Recipe For</strong></label>
             <div class="custom-control custom-radio custom-control-inline">
-                <input id="food-age-baby" class="custom-control-input" type="radio" name="food-age" value="Babies">
+                <input id="food-age-baby" class="custom-control-input" type="radio" name="food-age" value="Babies"
+                {% if recipe.age == "Babies" %}checked{% endif %}>
                 <label class="custom-control-label" for="food-age-baby">Babies</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input id="food-age-toddler" class="custom-control-input" type="radio" name="food-age" value="Toddlers"
-                    checked>
+                    {% if recipe.age == "Toddlers" %}checked{% endif %}>
                 <label class="custom-control-label" for="food-age-toddler">Toddlers</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input id="food-age-both" class="custom-control-input" type="radio" name="food-age"
-                    value="Babies & Toddlers">
+                    value="Babies & Toddlers" {% if recipe.age == "Babies & Toddlers" %}checked{% endif %}>
                 <label class="custom-control-label" for="food-age-both">Babies & Toddlers</label>
             </div>
         </div>
@@ -48,12 +54,14 @@
         <div id="group-ingredients" class="mb-3">
             <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>
             <table id="table-ingredients" class="col">
+                {% for i in ingredients %}
                 <tr>
-                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"
-                            required></td>
+                    <td><input id="ingredient" type="text" class="form-control" placeholder="250gr flour"
+                        value="{{ i }}" required></td>
                     <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
                     </td>
                 </tr>
+                {% endfor %}
             </table>
             <br>
             <button id="button-ingredients" type="button" class="btn btn-secondary">Add more ingredient</button>
@@ -61,18 +69,20 @@
         <div id="group-steps" class="mb-3">
             <label for="first-step" class="form-label-step"><strong>Steps</strong></label>
             <table id="table-steps" class="col">
+                {% for s in steps %}
                 <tr>
-                    <td><input id="first-step" type="text" class="form-control"
-                            placeholder="Mix flour and water until they thicken" required></td>
+                    <td><input id="step" type="text" class="form-control"
+                            placeholder="Mix flour and water until they thicken" value="{{ s }}" required></td>
                     <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
                     </td>
                 </tr>
+                {% endfor %}
             </table>
             <br>
             <button id="button-steps" type="button" class="btn btn-secondary">Add more step</button>
         </div>
 
-        <button id="button-submit" type="button" class="btn btn-primary">Submit</button>
+        <button id="button-update" type="button" class="btn btn-primary">Update</button>
     </form>
 </div>
 {% endblock %}

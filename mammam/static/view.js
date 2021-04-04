@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-  $("#button-update").click(function () {});
+  $("#button-update").click(function () {
+    let id = $("#recipe-title").attr("data-id");
+    window.location.replace("/recipe/update/" + id);
+  });
   $("#button-delete").click(function () {
     swal({
       title: "Are you sure?",

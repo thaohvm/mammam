@@ -15,4 +15,5 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("recipe/create", views.create, name="create"),
     path("recipe/<int:id>", views.recipe, name="recipe"),
+    path("recipe/update/<int:id>", views.update, name="update"),
 ]

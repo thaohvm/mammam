@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Q
 from django.http import (
+    HttpResponseForbidden,
     HttpResponseNotFound,
     HttpResponseRedirect,
     JsonResponse,
@@ -116,6 +117,48 @@ def recipe(request, id):
             "view.html",
             {"recipe": recipe, "ingredients": ingredients, "steps": steps},
         )
+    elif request.method == "POST":
+        if recipe.created_by != request.user:
+            return JsonResponse(
+                {
+                    "status": "ERROR",
+                    "message": "You're not the recipe's creator.",
+                },
+                status=403,
+            )
+
+        try:
+            data = json.loads(request.POST.get("data"))
+            files = request.FILES
+
+            if "image" in files:
+                # Need to delete the old image
+                if recipe.image:
+                    recipe.image.delete()
+                # Then upload the new image
+                image = Image(file=files["image"])
+                image.save()
+
+            recipe.title = data.get("title")
+            if data.get("description", ""):
+                recipe.description = data.get("description")
+            if data.get("food-age", ""):
+                recipe.age = data.get("food-age")
+            recipe.ingredients = json.dumps(data.get("ingredients"))
+            recipe.steps = json.dumps(data.get("steps"))
+            recipe.image = image if "image" in files else recipe.image
+            recipe.save()
+
+            url = reverse("recipe", kwargs={"id": recipe.id})
+            return JsonResponse(
+                {"status": "OK", "url": url},
+                status=200,
+            )
+        except Exception as e:
+            return JsonResponse(
+                {"status": "ERROR", "message": str(e)},
+                status=500,
+            )
     elif request.method == "DELETE":
         if recipe.created_by != request.user:
             return JsonResponse(
@@ -171,3 +214,23 @@ def create(request):
                 {"status": "ERROR", "message": str(e)},
                 status=500,
             )
+
+
+@login_required(login_url="/login")
+def update(request, id):
+    try:
+        recipe = Recipe.objects.get(id=id)
+    except Recipe.DoesNotExist:
+        return HttpResponseNotFound("Recipe not found!")
+
+    if recipe.created_by != request.user:
+        return HttpResponseForbidden()
+
+    ingredients = json.loads(recipe.ingredients)
+    steps = json.loads(recipe.steps)
+
+    return render(
+        request,
+        "update.html",
+        {"recipe": recipe, "ingredients": ingredients, "steps": steps},
+    )

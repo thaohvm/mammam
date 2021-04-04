@@ -21,8 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
       '<tr><td><input type="text" class="form-control" placeholder="Mix flour and water until they thicken" required></td><td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button></td></tr>';
   });
 
-  // Finally, submit handler
-  $("#button-submit").click(submit);
+  // Finally, main handler
+  $("#button-submit").click({ update: false }, submit);
+  $("#button-update").click({ update: true }, submit);
 });
 
 function removeRow(button) {
@@ -32,14 +33,16 @@ function removeRow(button) {
   }
 }
 
-function submit() {
+function submit(event) {
+  let update = event.data.update;
+
   // Validate form data first and stop if there're invalid data
-  if (!$("#create-form")[0].checkValidity()) {
-    $("#create-form").addClass("was-validated");
+  if (!$("#recipe-form")[0].checkValidity()) {
+    $("#recipe-form").addClass("was-validated");
     return;
   }
 
-  let formData = new FormData($("#create-form")[0]);
+  let formData = new FormData($("#recipe-form")[0]);
   let data = Object.fromEntries(formData.entries());
   delete data["image"]; // Image is handled separately from JSON data
 
@@ -71,26 +74,54 @@ function submit() {
   postData.append("data", JSON.stringify(data));
   postData.append("image", images[0]);
 
-  fetch("/recipe/create", {
-    method: "POST",
-    body: postData,
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      if (result["status"] != "OK") {
+  if (update) {
+    // This is an update request
+    let id = $("#recipe-title").attr("data-id");
+    fetch("/recipe/" + id, {
+      method: "POST",
+      body: postData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result["status"] != "OK") {
+          swal({
+            text: "Failed to update recipe. Please try again!",
+            icon: "error",
+          });
+        } else {
+          window.location.replace(result["url"]);
+        }
+      })
+      .catch((error) => {
+        console.log("Update failed: ", error);
+        swal({
+          text: "Failed to update recipe. Please try again!",
+          icon: "error",
+        });
+      });
+  } else {
+    // This is a creation request
+    fetch("/recipe/create", {
+      method: "POST",
+      body: postData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result["status"] != "OK") {
+          swal({
+            text: "Failed to create recipe. Please try again!",
+            icon: "error",
+          });
+        } else {
+          window.location.replace(result["url"]);
+        }
+      })
+      .catch((error) => {
+        console.log("Create failed: ", error);
         swal({
           text: "Failed to create recipe. Please try again!",
           icon: "error",
         });
-      } else {
-        window.location.replace(result["url"]);
-      }
-    })
-    .catch((error) => {
-      console.log("Create failed: ", error);
-      swal({
-        text: "Failed to create recipe. Please try again!",
-        icon: "error",
       });
-    });
+  }
 }
