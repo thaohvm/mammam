@@ -80,7 +80,19 @@ def create(request):
         data = json.loads(request.POST.get("data"))
         files = request.FILES
 
-        print(f"Request data: {data}")
-        print(f"Request photo: {files}")
+        if "image" in files:
+            image = Image(file=files["image"])
+            image.save()
+
+        recipe = Recipe(
+            title=data.get("title"),
+            description=data.get("description", ""),
+            age=data.get("food-age", ""),
+            ingredients=json.dumps(data.get("ingredients")),
+            steps=json.dumps(data.get("steps")),
+            image=image if image else None,
+            created_by=request.user,
+        )
+        recipe.save()
 
         return JsonResponse({"status": "OK"}, status=200)

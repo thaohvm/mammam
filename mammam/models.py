@@ -10,8 +10,8 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500, blank=True)
     age = models.TextField(max_length=100, blank=True)
-    ingredients = models.TextField(max_length=500, blank=True)
-    steps = models.TextField(max_length=4000, blank=True)
+    ingredients = models.TextField(max_length=500)
+    steps = models.TextField(max_length=4000)
     image = models.ForeignKey(
         "Image", on_delete=models.SET_NULL, null=True, related_name="image"
     )
