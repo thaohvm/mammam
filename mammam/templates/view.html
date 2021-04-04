@@ -5,12 +5,13 @@
 <div class="container-fluid">
     <div class="row justify-content-center mb-3">
         <div class="col-8 text-center">
-            <h2 id="recipe-title" data-id="{{ recipe.id }}">{{ recipe.title }}</h2>
+            <h1 id="recipe-title" data-id="{{ recipe.id }}">{{ recipe.title }}</h1>
             {% if recipe.created_by.first_name or recipe.created_by.last_name %}
             <h4>Created by {{ recipe.created_by.first_name }} {{ recipe.created_by.last_name }}</h4>
             {% else %}
             <h4>Created by {{ recipe.created_by.username }} for {{ recipe.age }}</h4>
             {% endif %}
+            <footer class="blockquote-footer">Last updated on {{ recipe.updated_at|date:"d M Y" }}</footer>
         </div>
     </div>
     <div class="row justify-content-center mb-3">
@@ -40,7 +41,7 @@
             <h3>Ingredients</h3>
             <div id="group-ingredients" class="list-group">
                 {% for i in ingredients %}
-                <a href="#" class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ i }}</a>
+                <a class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ i }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -50,7 +51,7 @@
             <h3>Steps</h3>
             <div id="group-steps" class="list-group">
                 {% for s in steps %}
-                <a href="#" class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ s }}</a>
+                <a class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ s }}</a>
                 {% endfor %}
             </div>
         </div>

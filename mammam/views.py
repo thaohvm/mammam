@@ -1,6 +1,7 @@
 import json
 import re
 
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -11,7 +12,7 @@ from django.http import (
     HttpResponseRedirect,
     JsonResponse,
 )
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -29,6 +30,10 @@ def index(request):
             q = Q()
             q |= Q(title__contains=w)
             q |= Q(description__contains=w)
+            q |= Q(description__contains=w)
+            q |= Q(age__contains=w)
+            q |= Q(ingredients__contains=w)
+            q |= Q(steps__contains=w)
             recipes.extend(Recipe.objects.filter(q))
         recipes = recipes[:100]
     else:
@@ -101,7 +106,6 @@ def register(request):
 
 
 @csrf_exempt
-@login_required(login_url="/login")
 def recipe(request, id):
     try:
         recipe = Recipe.objects.get(id=id)
@@ -118,6 +122,8 @@ def recipe(request, id):
             {"recipe": recipe, "ingredients": ingredients, "steps": steps},
         )
     elif request.method == "POST":
+        if not request.user.is_authenticated:
+            return redirect("%s?next=%s" % (settings.LOGIN_URL, request.path))
         if recipe.created_by != request.user:
             return JsonResponse(
                 {
@@ -160,6 +166,8 @@ def recipe(request, id):
                 status=500,
             )
     elif request.method == "DELETE":
+        if not request.user.is_authenticated:
+            return redirect("%s?next=%s" % (settings.LOGIN_URL, request.path))
         if recipe.created_by != request.user:
             return JsonResponse(
                 {
