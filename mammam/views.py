@@ -1,8 +1,10 @@
 import json
+import re
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.db.models import Q
 from django.http import (
     HttpResponseNotFound,
     HttpResponseRedirect,
@@ -16,7 +18,30 @@ from .models import Image, Recipe, User
 
 
 def index(request):
-    return render(request, "index.html")
+    query = request.GET.get("query", "")
+
+    if query:
+        # Preprocess query
+        words = re.sub("[^A-Za-z0-9 ]+", "", query).lower().split()
+        recipes = []
+        for w in words:
+            q = Q()
+            q |= Q(title__contains=w)
+            q |= Q(description__contains=w)
+            recipes.extend(Recipe.objects.filter(q))
+        recipes = recipes[:100]
+    else:
+        recipes = Recipe.objects.order_by("-created_at")[:10]
+
+    return render(
+        request,
+        "index.html",
+        {
+            "action": "search" if query else "view",
+            "query": query,
+            "recipes": recipes,
+        },
+    )
 
 
 def login_view(request):
@@ -136,7 +161,7 @@ def create(request):
             )
             recipe.save()
 
-            url = reverse("view", kwargs={"id": recipe.id})
+            url = reverse("recipe", kwargs={"id": recipe.id})
             return JsonResponse(
                 {"status": "OK", "url": url},
                 status=200,

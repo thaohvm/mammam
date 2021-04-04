@@ -14,7 +14,7 @@
             <div class="col-10">
                 <form action="/search" class="domain-form">
                     <div class="form-group d-md-flex">
-                        <input type="text" class="form-control px-4"
+                        <input name="query" type="text" class="form-control px-4"
                             placeholder="Search by recipe, description, ingredient, ...">
                         <input type="submit" class="search-domain btn btn-success px-5" value="Search">
                     </div>
@@ -28,6 +28,29 @@
                     <button type="submit" class="btn btn btn-success"> + Create Recipe</button>
                 </form>
             </div>
+        </div>
+
+        <div class="row mt-5">
+            {% if action == "search" %}
+            <h3>Top results for "{{ query }}"</h3>
+            {% else %}
+            <h3>Most recent recipes</h3>
+            {% endif %}
+        </div>
+        <div class="row ml-3 mr-3 mt-3">
+            {% for recipe in recipes %}
+            <div class="card ml-2 mr-2" style="width: 18rem;">
+                <img src="{{ recipe.image.file.url }}" class="card-img-top" alt="Recipe image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">{{ recipe.description }}</p>
+                    <p class="card-text"><small class="text-muted">
+                            Created by <strong>{{ recipe.created_by.username }}</strong></small>
+                    </p>
+                    <a href="{% url 'recipe' id=recipe.id %}" class="btn btn-primary">View</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
