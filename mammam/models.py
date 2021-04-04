@@ -18,9 +18,13 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.title} by {self.user}"
+
 
 class Image(models.Model):
     file = models.FileField(upload_to="images")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.id
+        return f"{self.id} at {self.file.url}"

@@ -1,5 +1,7 @@
 from django.contrib import admin
-from mammam.models import User
 
-# Register your models here.
+from .models import Image, Recipe, User
+
+admin.site.register(Image)
+admin.site.register(Recipe)
 admin.site.register(User)
