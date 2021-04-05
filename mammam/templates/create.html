@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container-fluid">
+    <form id="recipe-form" action="/" class="needs-validation" novalidate>
+        <hr>
+        <div class="mb-3">
+            <label for="recipe-title" class="form-label-title"><strong>Title</strong></label>
+            <input id="recipe-title" name="title" type="text" class="form-control" placeholder="Asian Dumplings"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="recipe-description" class="form-label-description"><strong>Description</strong></label>
+            <input id="recipe-description" name="description" type="text" class="form-control"
+                placeholder="Tell us about your recipe..." required>
+        </div>
+        <div>
+            <label for="recipe-image" class="form-label-image mr-3"><strong>Image</strong></label>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input id="recipe-image" name="image" type="file" accept="image/*" class="custom-file-input">
+                    <label id="recipe-image-label" class="custom-file-label" for="recipe-image">Upload a photo to show
+                        off your recipe</label>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div id="group-age">
+            <label class="form-label-title mr-3" for="food-age-baby"><strong>Recipe For</strong></label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input id="food-age-baby" class="custom-control-input" type="radio" name="food-age" value="Babies">
+                <label class="custom-control-label" for="food-age-baby">Babies</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input id="food-age-toddler" class="custom-control-input" type="radio" name="food-age" value="Toddlers"
+                    checked>
+                <label class="custom-control-label" for="food-age-toddler">Toddlers</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input id="food-age-both" class="custom-control-input" type="radio" name="food-age"
+                    value="Babies & Toddlers">
+                <label class="custom-control-label" for="food-age-both">Babies & Toddlers</label>
+            </div>
+        </div>
+
+        <div id="group-ingredients" class="mb-3">
+            <label for="first-ingredient" class="form-label-ingr"><strong>Ingredients</strong></label>
+            <table id="table-ingredients" class="col">
+                <tr>
+                    <td><input id="first-ingredient" type="text" class="form-control" placeholder="250gr flour"
+                            required></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <button id="button-ingredients" type="button" class="btn btn-secondary">Add more ingredient</button>
+        </div>
+        <div id="group-steps" class="mb-3">
+            <label for="first-step" class="form-label-step"><strong>Steps</strong></label>
+            <table id="table-steps" class="col">
+                <tr>
+                    <td><input id="first-step" type="text" class="form-control"
+                            placeholder="Mix flour and water until they thicken" required></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="removeRow($(this))">Remove</button>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <button id="button-steps" type="button" class="btn btn-secondary">Add more step</button>
+        </div>
+
+        <button id="button-submit" type="button" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'recipe.js' %}"></script>
+{% endblock %}

@@ -1,3 +1,17 @@
+## Customizations
+# Only keep media placeholder
+media/images/*
+!media/images/.gitkeep
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+
+## Default
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row justify-content-center mb-3">
+        <div class="col-8 text-center">
+            <h1 id="recipe-title" data-id="{{ recipe.id }}">{{ recipe.title }}</h1>
+            {% if recipe.created_by.first_name or recipe.created_by.last_name %}
+            <h4>Created by {{ recipe.created_by.first_name }} {{ recipe.created_by.last_name }}</h4>
+            {% else %}
+            <h4>Created by {{ recipe.created_by.username }} for {{ recipe.age }}</h4>
+            {% endif %}
+            <footer class="blockquote-footer">Last updated on {{ recipe.updated_at|date:"d M Y" }}</footer>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-6 text-center">
+            {% if recipe.created_by == request.user %}
+            <button id="button-update" type="button" class="btn btn-primary mr-5">Update</button>
+            <button id="button-delete" type="button" class="btn btn-danger">Delete</button>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-6 text-center">
+            {% if recipe.image %}
+            <img src="{{ recipe.image.file.url }}" class="img-thumbnail" alt="Recipe photo">
+            {% else %}
+            <img src="{% static 'images/recipe.jpg' %}" class="img-thumbnail" alt="Recipe photo">
+            {% endif %}
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-8 text-center">
+            <h4>{{ recipe.description}}</h4>
+        </div>
+    </div>
+    <div class="row mb-3 ml-5">
+        <div class="col">
+            <h3>Ingredients</h3>
+            <div id="group-ingredients" class="list-group">
+                {% for i in ingredients %}
+                <a class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ i }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1 ml-5">
+        <div class="col">
+            <h3>Steps</h3>
+            <div id="group-steps" class="list-group">
+                {% for s in steps %}
+                <a class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ s }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'view.js' %}"></script>
+{% endblock %}
