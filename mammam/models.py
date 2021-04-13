@@ -40,7 +40,7 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.title} by {self.user}"
+        return f"{self.title} by {self.created_by}"
 
 
 class Image(models.Model):
